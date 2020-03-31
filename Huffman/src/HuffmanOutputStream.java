@@ -3,8 +3,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class HuffmanOutputStream extends BufferedOutputStream {
-	byte currentByte;
-	int numOfBits;
+	private byte currentByte;
+	private int numOfBits;
 	public HuffmanOutputStream(OutputStream out, int size) {
 		super(out, size);
 		currentByte = 0;
