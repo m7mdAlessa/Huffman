@@ -3,6 +3,6 @@ import java.io.IOException;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		Huffman.encode("src/test.txt");
+		Huffman.encode("src/book.txt");
 	}
 }

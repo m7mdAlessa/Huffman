@@ -12,8 +12,8 @@ public class HuffmanOutputStream extends BufferedOutputStream {
 	}
 
 	public void writeBits(byte b,int n) throws IOException {
-		b = (byte) (b << (8-n));
-		b = (byte) (b >>> (8-n));
+		byte num =(byte) (Math.pow(2, n) - 1);
+		b = (byte) (b&num);
 		if(numOfBits + n > 8) {
 			int i = numOfBits + n - 8;
 			byte a = (byte) (b >>> i);
@@ -31,6 +31,9 @@ public class HuffmanOutputStream extends BufferedOutputStream {
 
 	public int size() {
 		return (count * 8)+numOfBits;
+	}
+	public int sizeInByte() {
+		return (count) + (numOfBits >0?1:0);
 	}
 	public void flushByte() throws IOException {
 		if(numOfBits > 0) {

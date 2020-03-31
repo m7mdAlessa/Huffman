@@ -18,4 +18,15 @@ public class HuffmanNode {
 		left = r;
 		right = l;
 	}
+	public HuffmanNode(){
+		leaf = false;
+		left = null;
+		right = null;
+	}
+	public void setLeft(HuffmanNode l) {
+		left = l;
+	}
+	public void setRight(HuffmanNode r) {
+		right = r;
+	}
 }
