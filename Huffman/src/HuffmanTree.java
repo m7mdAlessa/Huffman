@@ -24,6 +24,27 @@ public class HuffmanTree {
 		getCodes(n.left,m,l<<1,size+1);
 		getCodes(n.right,m,(l<<1)|1,size+1);
 	}
+	public void decode(byte[] arr,OutputStream out,int bitSize) throws IOException {
+		HuffmanNode n = root;
+		for(int i = 0;i<bitSize;i++) {
+			int j = i/8;
+			byte current = bitAt(arr[j],i%8);
+			if(current == 0) {
+				n = n.left;
+			}else if(current == 1){
+				n = n.right;
+			}
+			if(n.leaf) {
+				out.write(n.b);
+				n = root;
+			}
+		}
+	}
+	private static byte bitAt(byte b,int i) {
+		b = (byte) (b>>>(7-i));
+		b = (byte) (b&1);
+		return b;
+	}
 	public void writeToFile(OutputStream out) throws IOException {
 		byte[] tree = new byte[size()*2];
 		writeToArr(root,tree,0);

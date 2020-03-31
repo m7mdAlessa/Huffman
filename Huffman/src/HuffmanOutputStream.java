@@ -12,11 +12,13 @@ public class HuffmanOutputStream extends BufferedOutputStream {
 	}
 
 	public void writeBits(byte b,int n) throws IOException {
-		byte num =(byte) (Math.pow(2, n) - 1);
+		byte num = (byte) ((1<<n) - 1);
 		b = (byte) (b&num);
 		if(numOfBits + n > 8) {
 			int i = numOfBits + n - 8;
 			byte a = (byte) (b >>> i);
+			int j = (1<<(8-i))-1;
+			a &=j;
 			currentByte = (byte) (currentByte | a);
 			write(currentByte);
 			currentByte = 0;

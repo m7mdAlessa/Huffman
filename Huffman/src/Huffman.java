@@ -39,6 +39,33 @@ public class Huffman {
 		h.close();
 		
 	}
+	public static void decode(String fileName) throws IOException {
+		File inFile = new File(fileName);
+		File outFile = new File(fileName.substring(0, fileName.length()-3));
+		FileInputStream in = new FileInputStream(inFile);
+		OutputStream out = new FileOutputStream(outFile);
+		long len = inFile.length();
+		byte[] bArr = new byte[(int) len];
+		in.read(bArr);
+		int size = arrToInt(Arrays.copyOfRange(bArr, 0, 4));
+		int tSize = arrToInt(Arrays.copyOfRange(bArr, 4, 8));
+		int bitSize = arrToInt(Arrays.copyOfRange(bArr, 8, 12));
+		byte[] tree = Arrays.copyOfRange(bArr, 12,12+tSize);
+		byte[] encoded = Arrays.copyOfRange(bArr, 12+tSize,size);
+		HuffmanTree hTree = new HuffmanTree(tree);
+		hTree.decode(encoded, out, bitSize);
+		
+		in.close();
+		out.close();
+		
+	}
+	private static int arrToInt(byte[] b) {
+		int i = ((int) b[3] & 0xff) << 24
+			       | ((int) b[2] & 0xff) << 16
+			       | ((int) b[1] & 0xff) << 8
+			       | ((int) b[0] & 0xff);
+		return i;
+	}
 	private static void writeInt(OutputStream out,int num) throws IOException {
 		byte[] b = new byte[] {
 			       (byte) num,
@@ -70,4 +97,5 @@ public class Huffman {
 			       (byte) (lng >> 56)};
 		return b;
 	}
+	
 }
