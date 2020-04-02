@@ -9,10 +9,10 @@ public class Main {
 		if(args[0].equals("hc")) {
 			if(args[1].equals("-c")) {
 				String fileName = args[2];
-				Huffman.encode(fileName);
+				Huffman.encode(fileName,fileName+".hc");
 			}else if(args[1].equals("-d")) {
 				String fileName = args[2];
-				Huffman.decode(fileName);
+				Huffman.decode(fileName,fileName.substring(0, fileName.length()-3));
 			}
 		}
 		

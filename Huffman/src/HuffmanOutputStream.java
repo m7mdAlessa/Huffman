@@ -1,42 +1,51 @@
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
-public class HuffmanOutputStream extends BufferedOutputStream {
-	private byte currentByte;
-	private int numOfBits;
-	public HuffmanOutputStream(OutputStream out, int size) {
-		super(out, size);
+public class HuffmanOutputStream extends FileOutputStream {
+	private byte currentByte;//byte with the bits used in the leftmost bits
+	
+	private int numOfBits;//numOfBits used in the currentByte
+	
+	//creates an output stream to write to fileName
+	public HuffmanOutputStream(String fileName) throws FileNotFoundException {
+		super(fileName);
 		currentByte = 0;
 		numOfBits = 0;
 	}
-
+	
+	//write the rightmost n bits in b into the file.
 	public void writeBits(byte b,int n) throws IOException {
-		byte num = (byte) ((1<<n) - 1);
-		b = (byte) (b&num);
+		//sets the leftmost (8-n) bits to zero.
+		b &=((1<<n)-1);
+		
+		//if you can't add all the n bits into currentByte
 		if(numOfBits + n > 8) {
+			
+			//i is the number of bits in b that can't be added to the currentByte
 			int i = numOfBits + n - 8;
-			byte a = (byte) (b >>> i);
-			int j = (1<<(8-i))-1;
-			a &=j;
-			currentByte = (byte) (currentByte | a);
+			
+			// a is the bits that can be added into currentByte
+			byte a = (byte) ((b&255) >>> i);
+			
+			//add a to currentByte
+			currentByte |= a;
+			
+			//write the currentByte to the file and reset the currentByte
 			write(currentByte);
 			currentByte = 0;
 			numOfBits = 0;
+			
+			//write the remaining i bits
 			writeBits(b,i);
-			return;
+			
+		}else {
+			//write n bits into the currentByte
+			b  <<= (8-(n+numOfBits));
+			currentByte |= b;
+			numOfBits+=n;
 		}
-		b = (byte) (b << (8-(n+numOfBits)));
-		currentByte = (byte) (currentByte | b);
-		numOfBits+=n;
 	}
-
-	public int size() {
-		return (count * 8)+numOfBits;
-	}
-	public int sizeInByte() {
-		return (count) + (numOfBits >0?1:0);
-	}
+	
+	//write the currentByte into the file
 	public void flushByte() throws IOException {
 		if(numOfBits > 0) {
 			write(currentByte);

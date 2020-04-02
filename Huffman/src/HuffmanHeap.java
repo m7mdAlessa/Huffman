@@ -7,19 +7,25 @@ public class HuffmanHeap {
   
     private static final int FRONT = 0; 
   
-    public HuffmanHeap(HashMap<Byte,Integer> h) 
-    { 
-        int n = h.entrySet().size();
+    //creates the heap from the map 
+    public HuffmanHeap(HashMap<Byte,Integer> map) {
+    	//the size of heap
+        int n = map.entrySet().size();
+        
         size = 0;
-        Set<Entry<Byte,Integer>> set = h.entrySet();
+        Set<Entry<Byte,Integer>> set = map.entrySet();
+        
+        //creates a array with size n
         Heap = new HuffmanNode[n];
+        //add each byte and its code into the array
         for(Entry<Byte,Integer> entry : set) {
         	HuffmanNode p = new HuffmanNode(entry.getKey(),entry.getValue());
         	Heap[size++] = p;
         }
+        //convert the array into a min heap
         minHeap();
     } 
-  
+    // constructs a huffman tree from the min heap
     public HuffmanTree constructTree(){
     	while(size >1) {
     		HuffmanNode n1 = remove();
