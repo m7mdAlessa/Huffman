@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Huffman {
-
+	
 	//encode the file "inFile" and writes the encoded file into "outFile
 	public static void encode(String inFile,String outFile) throws IOException {
 		File file = new File(inFile);
@@ -101,20 +101,20 @@ public class Huffman {
 	
 	//converts the byte array b into int and returns it
 	private static int arrToInt(byte[] b) {
-		int i = ((int) b[3] & 0xff) << 24
-			       | ((int) b[2] & 0xff) << 16
-			       | ((int) b[1] & 0xff) << 8
-			       | ((int) b[0] & 0xff);
+		int i = ((int) b[0] & 0xff) << 24
+			       | ((int) b[1] & 0xff) << 16
+			       | ((int) b[2] & 0xff) << 8
+			       | ((int) b[3] & 0xff);
 		return i;
 	}
 	
 	//write int num into the file
 	private static void writeInt(OutputStream out,int num) throws IOException {
-		byte[] b = new byte[] {
-			       (byte) num,
-			       (byte) (num >> 8),
-			       (byte) (num >> 16),
-			       (byte) (num >> 24)};
+		byte[] b = new byte[] {(byte) (num >> 24),
+				(byte) (num >> 16),
+				(byte) (num >> 8),
+				(byte) num};
+		
 		out.write(b);
 	}
 	
@@ -133,25 +133,24 @@ public class Huffman {
 		byte[] b = longToByteArr(code);
 		
 		//write the rightmost (remainder) bits in the leftmost byte into the file
-		h.writeBits(b[numOfBytes-1], remainder);
+		h.writeBits(b[8-numOfBytes], remainder);
 		
 		//write the remaining bytes into the file
-		for(int i = numOfBytes-2;i>=0;i--) {
+		for(int i =9-numOfBytes;i<8;i++) {
 			h.writeBits(b[i], 8);
 		}
 		
 	}
 	
 	private static byte[] longToByteArr(long lng) {
-		byte[] b = new byte[] {
-			       (byte) lng,
-			       (byte) (lng >> 8),
-			       (byte) (lng >> 16),
-			       (byte) (lng >> 24),
-			       (byte) (lng >> 32),
-			       (byte) (lng >> 40),
+		byte[] b = new byte[] {(byte) (lng >> 56),
 			       (byte) (lng >> 48),
-			       (byte) (lng >> 56)};
+			       (byte) (lng >> 40),
+			       (byte) (lng >> 32),
+			       (byte) (lng >> 24),
+			       (byte) (lng >> 16),
+			       (byte) (lng >> 8),
+			       (byte) lng};
 		return b;
 	}
 	

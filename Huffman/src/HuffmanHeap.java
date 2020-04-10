@@ -5,8 +5,6 @@ public class HuffmanHeap {
     private HuffmanNode[] Heap; 
     private int size; 
   
-    private static final int FRONT = 0; 
-  
     //creates the heap from the map 
     public HuffmanHeap(HashMap<Byte,Integer> map) {
     	//the size of heap
@@ -124,9 +122,9 @@ public class HuffmanHeap {
 
     public HuffmanNode remove() 
     { 
-        HuffmanNode popped = Heap[FRONT]; 
-        Heap[FRONT] = Heap[--size]; 
-        minHeapify(FRONT); 
+        HuffmanNode popped = Heap[0]; 
+        Heap[0] = Heap[--size]; 
+        minHeapify(0); 
         return popped; 
     } 
 
