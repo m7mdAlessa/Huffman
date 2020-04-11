@@ -1,13 +1,13 @@
 
 public class HuffmanNode {
-	boolean isLeaf;//
+	boolean isLeaf;
 	int freq;
-	byte b;
+	byte value;
 	HuffmanNode left,right;
 	
 	public HuffmanNode(byte b,int frequency){
 		isLeaf = true;
-		this.b = b;
+		this.value = b;
 		freq = frequency;
 		left = null;
 		right = null;
@@ -22,11 +22,5 @@ public class HuffmanNode {
 		isLeaf = false;
 		left = null;
 		right = null;
-	}
-	public void setLeft(HuffmanNode l) {
-		left = l;
-	}
-	public void setRight(HuffmanNode r) {
-		right = r;
 	}
 }

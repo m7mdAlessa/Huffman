@@ -19,10 +19,8 @@ public class HuffmanOutputStream extends FileOutputStream {
 		
 		//if you can't add all the n bits into currentByte
 		if(numOfBits + n > 8) {
-			
 			//i is the number of bits in b that can't be added to the currentByte
 			int i = numOfBits + n - 8;
-			
 			// a is the bits that can be added into currentByte
 			byte a = (byte) ((b&255) >>> i);
 			

@@ -4,12 +4,12 @@ import java.util.*;
 public class HuffmanTree {
 	HuffmanNode root;
 	
-	//creates a huffman tree from a root node
+	//creates a Huffman tree from a root node
 	public HuffmanTree(HuffmanNode root) {
 		this.root = root;
 	}
 	
-	//creates a huffman tree form the tree data
+	//creates a Huffman tree from the tree data
 	public HuffmanTree(byte[] tree) {
 		HuffmanNode r = new HuffmanNode();
 		readFromArr(r,tree,0);
@@ -24,7 +24,7 @@ public class HuffmanTree {
 	}
 	public void getCodes(HuffmanNode n, Map<Byte,Pair<Long,Integer>> m,long l,int size) {
 		if(n.isLeaf) {
-			m.put(n.b, new Pair<Long,Integer>(l,size));
+			m.put(n.value, new Pair<Long,Integer>(l,size));
 			return;
 		}
 		getCodes(n.left,m,l<<1,size+1);
@@ -63,7 +63,7 @@ public class HuffmanTree {
 			
 			//if n is a leaf node write the decoded byte into the file and reset n to the root
 			if(n.isLeaf) {
-				out.write(n.b);
+				out.write(n.value);
 				n = root;
 			}
 		}
@@ -90,7 +90,7 @@ public class HuffmanTree {
 	private int writeToArr(HuffmanNode n,byte[] t,int index){
 		if(n.isLeaf) {
 			t[index++] = 1;
-			t[index++] = n.b;
+			t[index++] = n.value;
 			return index;
 		}
 		t[index++] = 0;

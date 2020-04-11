@@ -9,7 +9,7 @@ public class Huffman {
 		FileInputStream in = new FileInputStream(file);
 		HuffmanOutputStream out = new HuffmanOutputStream(outFile);
 		
-		//creates a byte array with size = file size in bytes
+		//creates a byte array with size equal to inFile size in bytes
 		byte[] bArr = new byte[(int) file.length()];
 		
 		//reads the inFile and stores its contents in bArr
@@ -30,10 +30,10 @@ public class Huffman {
 		//creates a heap from the freqMap
 		HuffmanHeap hHeap = new HuffmanHeap(freqMap);
 		
-		//creates a huffman tree from the heap
+		//creates a Huffman tree from the heap
 		HuffmanTree tree = hHeap.constructTree();
 		
-		//creates a map that contains the original byte as a key and a pair that contains the encoded code and the number of bits in that code
+		//creates a map that contains the original byte as a key and a pair that contains the encoded code and the number of bits used in that code
 		HashMap<Byte,Pair<Long,Integer>> codes = tree.getMap();
 		
 		// calculate the size of the tree
@@ -125,7 +125,7 @@ public class Huffman {
 		
 		//number of bytes in long
 		int numOfBytes = (int) Math.ceil(((double)size)/8);
-		
+		//0000000 111 00000000
 		//number of bits used in the leftmost byte
 		int remainder = (size % 8==0)?8:size%8;
 		
@@ -141,7 +141,7 @@ public class Huffman {
 		}
 		
 	}
-	
+	//converts the long lng to a byte array and returns it
 	private static byte[] longToByteArr(long lng) {
 		byte[] b = new byte[] {(byte) (lng >> 56),
 			       (byte) (lng >> 48),

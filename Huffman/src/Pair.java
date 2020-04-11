@@ -7,7 +7,4 @@ public class Pair<T,V> {
 		first = f;
 		second = s;
 	}
-	public String toString(){
-		return first+" , "+second;
-	}
 }
