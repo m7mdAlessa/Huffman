@@ -3,7 +3,7 @@ Huffman Encoding is one of the simplest algorithms to compress data. Even though
 In this project I implemented Huffman encoding and decoding.
 
 # How to use
-##Run the program with these command line arguments:  
+## Run the program with these command line arguments:  
 To compress:   
 ```
 hc -c input_file
